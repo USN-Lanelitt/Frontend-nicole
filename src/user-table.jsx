@@ -17,6 +17,7 @@ const UserTable = ({users}) => {
                         <TableCell >Etternavn</TableCell>
                     </TableRow>
                 </TableHead>
+
                 <TableBody>
                     {
                         users.map((user) =>

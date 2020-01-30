@@ -1,64 +1,83 @@
-import React from 'react';
-import { Paper, withStyles, Grid, TextField, Button, FormControlLabel, Checkbox } from '@material-ui/core';
-
-const styles = theme => ({
-    margin: {
-        margin: theme.spacing.unit * 2,
-    },
-    padding: {
-        padding: theme.spacing(1, 50, 10, 50),
-    }
-});
-
-class LoginTab extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {value: ''};
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({value: event.target.value});
-    }
+import React, {useState} from 'react';
+import { Grid, TextField, Button } from '@material-ui/core';
 
 
-    handleSubmit(event) {
-        if(this.state.value != 'Nicole1') {
-            alert('Feil brukrnavn/passord');
+const LoginForm = () => {
+    let [username, setUsernameVar] = useState('');
+    let [password, setPasswordVar] = useState('');
+
+    function login() {
+        if (setUsernameVar.length > 1 && setPasswordVar.length > 1) {
+            console.log("Brukernavn");
+            console.log(setUsernameVar);
+            console.log("Passord");
+            console.log(setPasswordVar);
+
+            fetch('/api/login', {
+                method: 'post',
+                headers : {
+                    // 'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: setUsernameVar,
+                    password: setPasswordVar,
+                })
+            }).then(Response => Response.json())
+                .then((Result, json) => {
+                    alert(Result);
+                })
+
+        }
+        else {
+            alert("Alle feltene må fylles ut");
         }
     }
 
-
- render() {
-        const { classes } = this.props;
-
-        return (
-            <div>
-            <h1>Login</h1>
-            <Paper className={classes.padding}>
-                <div className={classes.margin}>
-                    <Grid container spacing={8} alignItems="flex-end">
-                        <Grid item md={true} sm={true} xs={true}>
-                            <TextField id="username" label="Username" type="text" value={this.state.value} onChange={this.handleChange} autoFocus required />
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={8} alignItems="flex-end">
-                        <Grid item md={true} sm={true} xs={true}>
-                            <TextField id="password" label="Password" type="password"  />
-                        </Grid>
-                    </Grid>
-
-                    <Grid container justify="center" style={{ marginTop: '10px' }}>
-                        <Button onClick={() => this.handleSubmit()} type="submit" value="Submit" variant="outlined" color="primary" style={{ textTransform: "none" }}>Login</Button>
-                    </Grid>
-                </div>
-            </Paper>
-            </div>
-        );
-
+    function setUsernameReg(e) {
+        setUsernameVar = e.target.value;
     }
-}
 
-export default withStyles(styles)(LoginTab);
+    function setPasswordReg(e) {
+        setPasswordVar = e.target.value;
+    }
+
+    return (
+
+        <div style={{margin:'50px'}}>
+            <h1>Login</h1>
+            <Grid container spacing={4} alignItems="flex-end">
+                <Grid item md={true} sm={true} xs={true}>
+                    <TextField id="username_reg"
+                               label="Username"
+                               type="text"
+                               required={true}
+                               onChange={setUsernameReg} autoFocus required/>
+                </Grid>
+            </Grid>
+            <Grid container spacing={4} alignItems="flex-end">
+                <Grid item md={true} sm={true} xs={true}>
+                    <TextField
+                        id="password"
+                        label="Password"
+                        type="password"
+                        required={true}
+                        onChange={setPasswordReg}/>
+                </Grid>
+            </Grid>
+
+            <Grid container spacing={10} justify="center" style={{marginTop: '10px'}}>
+
+                <Button  onClick={() => login()}
+                         type="submit"
+                         value="Submit"
+                         variant="outlined"
+                         color="primary"
+                         style={{textTransform: "none"}}>Login</Button>
+
+            </Grid>
+        </div>
+    );
+};
+
+export default LoginForm;

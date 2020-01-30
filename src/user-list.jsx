@@ -39,7 +39,7 @@ const UserList = () => {
             </Box>
 
             <Box m={4} display="flex" alignItems="center" flexDirection="column">
-                    {loading ? <CircularProgress size={70}/> : <UserTable users={users}/>}
+                {loading ? <CircularProgress size={70}/> : <UserTable users={users}/>}
             </Box>
 
         </div>
