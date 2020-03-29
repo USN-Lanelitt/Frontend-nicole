@@ -1,24 +1,20 @@
 import React, {useState} from 'react';
 import Button from "@material-ui/core/Button";
-import FriendTable from "./friend-table";
 import {CircularProgress} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import axios from "axios";
+import FriendRequestTable from "./friend-request-table";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 
-const UserList = () => {
-    const axios = require('axios').default;
-    const userid = 18;
-    const friendid = 40;
-
-    sessionStorage.setItem('userId', userid);
+const FriendRequestList = () => {
     const [id, setId] = useState(sessionStorage.getItem('userId'));
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
 
     function getUsers() {
-        console.log("", id, sessionStorage.getItem('userId'));
+        console.log("getuserrequest", id, sessionStorage.getItem('userId'));
         setLoading(true);
-        axios.get('/user/'+id+'/friends')
+        axios.get('/user/'+id+'/friendRequests')
         .then((response) => {
             if (response.status === 200) {
                 console.log(response);
@@ -29,22 +25,23 @@ const UserList = () => {
         .catch((e) => {
             console.log(e);
         }, [setUsers, id]);
-        console.log("getusers");
     }
 
     return (
         <div>
-            <h2>User list</h2>
+            <h2>Friend Request list</h2>
             <Box m={2}>
-                <Button onClick={() => getUsers()} color="primary" variant="contained">Get users</Button>
-                <Button onClick={() => setUsers([])} color="primary" variant="contained">Clear</Button>
+                <ButtonGroup color="primary" variant="contained">
+                    <Button onClick={() => getUsers()}>Get friend requests</Button>
+                    <Button onClick={() => setUsers([])}>Clear</Button>
+                </ButtonGroup>
             </Box>
 
             <Box m={4} display="flex" alignItems="center" flexDirection="column">
-                {loading ? <CircularProgress size={70}/> : <FriendTable users={users}/>}
+                {loading ? <CircularProgress size={60}/> : <FriendRequestTable users={users}/>}
             </Box>
         </div>
     );
 };
 
-export default UserList;
+export default FriendRequestList;
