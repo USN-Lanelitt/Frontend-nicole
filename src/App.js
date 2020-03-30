@@ -7,8 +7,8 @@ import ComboList from "./combo-list";
 import Login from "./login";
 import ColoredLine from "./colored-line";
 import Container from "@material-ui/core/Container";
-import Report from "./report-form";
-import ReportModal from "./report-modal";
+import ReportForm from "./report-modal";
+import Admin from "./admin";
 
 function App() {
     return (
@@ -24,10 +24,16 @@ function App() {
                 <ColoredLine color="grey" />
                 <ComboList/>
                 <ColoredLine color="grey" />
-                <ReportModal/>
+                <ReportForm/>
+
+            </Container>
+            <Container>
+                <ColoredLine color="grey" />
+                <Admin/>
                 <ColoredLine color="grey" />
             </Container>
         </div>
+
     );
 }
 

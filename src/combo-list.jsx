@@ -21,7 +21,7 @@ function ComboList() {
     }, [setUsers, userId]);
 
     return (
-        <Box m={2}display="flex" alignItems="center" flexDirection="column">
+        <Box m={2} display="flex" alignItems="center" flexDirection="column">
             <Autocomplete
                 id="combo-box-demo"
                 options={users}

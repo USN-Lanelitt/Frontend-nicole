@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Fade from '@material-ui/core/Fade';
-import Typography from "@material-ui/core/Typography";
+import useInput from "./use-input";
 import Button from "@material-ui/core/Button";
-import Report from "./report-form";
+import {makeStyles} from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Fade from "@material-ui/core/Fade";
+import Modal from "@material-ui/core/Modal";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -33,9 +34,30 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ReportModal = () => {
+function ReportForm(props) {
     const classes = useStyles();
+    let id = 4;
+    sessionStorage.setItem('userId2', id);
+
+    const [userId, setId] = useState(sessionStorage.getItem('userId'));
+    const [userId2, setId2] = useState(sessionStorage.getItem('userId2'));
+    const { value:subject, bind:bindSubject, reset:resetSubject } = useInput('');
+    const { value:comment, bind:bindComment, reset:resetComment } = useInput('');
     const [open, setOpen] = React.useState(false);
+
+    function report() {
+        console.log("report", userId, sessionStorage.getItem('userId'));
+        axios.post('/user/'+ userId +'/report/' + userId2, {
+            subject:subject,
+            comment:comment
+        }).then((response) => {
+            if (response.status === 200) {
+                console.log(response.data);
+            }
+        })
+        .catch(e => console.log(e));
+    }
+
 
     const handleOpen = () => {
         setOpen(true);
@@ -45,10 +67,12 @@ const ReportModal = () => {
         setOpen(false);
     };
 
-    const [subject, setSubject] = useState();
-    const [comment, setComment] = useState();
-
-
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        alert(`Submitting Emne: ${subject}, Melding: ${comment}`);
+        resetSubject();
+        resetComment();
+    };
 
     const body = (
         <Fade in={open}>
@@ -56,23 +80,23 @@ const ReportModal = () => {
                 <Typography component="h1" variant="h5">
                     Rapporter sak
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form}  onSubmit={handleSubmit}>
                     <input
-                        id="sSubject"
-                        name="subject"
                         type="text"
+                        label="Emne"
                         className={classes.textfield}
-                    />
+                        {...bindSubject} />
+
                     <textarea
-                        id="sComment"
-                        name="comment"
                         className={classes.textarea}
-                    />
+                        {...bindComment} />
+
                     <Button
                         type="submit"
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={() => report()}
                     >
                         Send
                     </Button>
@@ -102,6 +126,6 @@ const ReportModal = () => {
             </Modal>
         </div>
     );
-};
+}
 
-export default ReportModal;
+export default ReportForm;

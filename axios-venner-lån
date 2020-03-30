@@ -533,3 +533,36 @@ useEffect(() => {
             dateEnd={loan.dateEnd}
     </Grid>
 ))}
+
+-----------------------------------------------------------Report------------------------------------------------------------
+
+Funksjon makeReport - url:/user/{iUserId}/friend/{iUser2Id}/report - method POST
+
+Send til backend:
+•	userId
+•	user2Id
+•	emne
+•	klage
+
+
+const [userId, setId] = useState(sessionStorage.getItem('userId'));
+const [data, setData] = useState([]);
+
+useEffect(() => {
+    console.log("", userId, sessionStorage.getItem('userId'));
+    axios.post('/user/'+userId+'/loanRequest/'+loanId+'/'+status')
+    .then((response) => {
+        if (response.status === 200) {
+            console.log(response.data);
+      	    }
+       })
+    .catch(e => console.log(e));
+}, [setData, userId]);
+
+
+
+
+
+
+
+
