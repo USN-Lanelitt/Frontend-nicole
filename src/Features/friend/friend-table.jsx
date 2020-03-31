@@ -11,16 +11,15 @@ import axios from "axios";
 
 const FriendTable = ({users}) => {
     const [userId, setId] = useState(sessionStorage.getItem('userId'));
-
     function deleteFriend(friendId) {
         console.log("deletefriend", userId, sessionStorage.getItem('userId'));
         axios.post('/user/'+userId+'/friend/'+friendId+'/delete')
-            .then((response) => {
-                if (response.status === 200) {
-                    console.log(response.data);
-                }
-            })
-            .catch(e => console.log(e));
+        .then((response) => {
+            if (response.status === 200) {
+                console.log(response.data);
+            }
+        })
+        .catch(e => console.log(e));
     }
 
     return (

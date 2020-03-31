@@ -12,16 +12,15 @@ import axios from "axios";
 
 const FriendRequestTable = ({users}) => {
     const [userId, setId] = useState(sessionStorage.getItem('userId'));
-
     function reply(friendId, status) {
         console.log("replyrequest", userId, sessionStorage.getItem('userId'));
         axios.post('/user/'+userId+'/friendRequest/'+friendId+'/'+status)
-            .then((response) => {
-                if (response.status === 200) {
-                    console.log(response.data);
-                }
-            })
-            .catch(e => console.log(e));
+        .then((response) => {
+            if (response.status === 200) {
+                console.log(response.data);
+            }
+        })
+        .catch(e => console.log(e));
     }
 
     return (

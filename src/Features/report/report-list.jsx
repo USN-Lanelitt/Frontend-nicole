@@ -1,47 +1,48 @@
 import React, {useState} from 'react';
 import Button from "@material-ui/core/Button";
-import FriendTable from "./friend-table";
+import FriendTable from "../friend/friend-table";
 import {CircularProgress} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import axios from "axios";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import ReportTable from "./report-table";
 
-const FriendList = () => {
-    const [userId, setId] = useState(sessionStorage.getItem('userId'));
-    const [users, setUsers] = useState([]);
+const ReportList = () => {
+    const [reports, setReports] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    function getUsers() {
-        console.log("getfriends", userId, sessionStorage.getItem('userId'));
+    function getReports() {
+        console.log("getreports", sessionStorage.getItem('userId'));
         setLoading(true);
-        axios.get('/user/'+userId+'/friends')
+        axios.get('/getReports')
         .then((response) => {
             if (response.status === 200) {
                 console.log(response.data);
-                setUsers(response.data);
+                setReports(response.data);
                 setLoading(false);
             }
         })
         .catch((e) => {
             console.log(e);
-        }, [setUsers, userId]);
+        });
     }
 
     return (
         <div>
-            <h2>Friend list</h2>
+            <h2>Rapporterte saker</h2>
             <Box m={2}>
                 <ButtonGroup color="primary" variant="contained">
-                    <Button onClick={() => getUsers()}>Get friends</Button>
-                    <Button onClick={() => setUsers([])}>Clear</Button>
+                    <Button onClick={() => getReports()}>Hent saker</Button>
+                    <Button onClick={() => setReports([])}>Fjern</Button>
                 </ButtonGroup>
             </Box>
 
             <Box m={4} display="flex" alignItems="center" flexDirection="column">
-                {loading ? <CircularProgress size={60}/> : <FriendTable users={users}/>}
+                {loading ? <CircularProgress size={60}/> : <ReportTable reports={reports}/>}
             </Box>
+
         </div>
     );
 };
 
-export default FriendList;
+export default ReportList;

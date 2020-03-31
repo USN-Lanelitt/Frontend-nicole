@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import MaterialTable from 'material-table';
 import axios from "axios";
+import editUser from "./edit-user";
 
-function Admin() {
-    const [id, setId] = useState();
+const AdminTable = () => {
     const [userId, setUserId] = useState(sessionStorage.getItem('userId'));
     const [users, setUsers] = useState([]);
         useEffect(()=> {
@@ -11,39 +11,31 @@ function Admin() {
             axios.get('/users')
                 .then((response) => {
                     if (response.status === 200) {
+                        console.log('data');
                         console.log(response.data);
                         setUsers(response.data);
                     }
                 })
                 .catch(e => console.log(e));
+
         }, [setUsers, userId]);
 
     const [state, setState] = React.useState({
-
         columns: [
             { title: 'Id', field: 'id' },
+            { title: 'Nickname', field: 'nickname' },
             { title: 'Fornavn', field: 'firstName' },
             { title: 'Mellomnavn', field: 'middleName' },
             { title: 'Etternavn', field: 'lastName' },
             { title: 'E-post', field: 'email' },
-            { title: 'Telefon', field: 'phone' },
-            { title: 'Aktiv', field: 'active' },
-            { title: 'Reklame', field: 'newsSubscription' },
-            { title: 'Antall eiendeler', field: 'number' },
+            { title: 'Antall', field: 'number' },
+            { title: 'Brukertype', field: 'usertype' },
+            { title: 'Aktiv', field: 'active'},
+            { title: 'Nyheter', field: 'newsSubscription'},
         ],
         data: users
     });
 
-    function editUser(id) {
-        console.log("editUser", id, sessionStorage.getItem('userId'));
-        axios.post('/user/'+id+'/edit')
-            .then((response) => {
-                if (response.status === 200) {
-                    console.log(response.data);
-                }
-            })
-            .catch(e => console.log(e));
-    }
 
     return (
         <div >
@@ -67,10 +59,31 @@ function Admin() {
                         new Promise((resolve) => {
                             setTimeout(() => {
                                 resolve();
+                                editUser(
+                                    newData.id,
+                                    newData.nickname,
+                                    newData.firstName,
+                                    newData.middleName,
+                                    newData.lastName,
+                                    newData.phone,
+                                    newData.email,
+                                    newData.usertype,
+                                    newData.active,
+                                    newData.newsSubscription);
+                                console.log(
+                                    newData.id,
+                                    newData.nickname,
+                                    newData.firstName,
+                                    newData.middleName,
+                                    newData.lastName,
+                                    newData.phone,
+                                    newData.email,
+                                    newData.usertype,
+                                    newData.active,
+                                    newData.newsSubscription);
                                 if (oldData) {
                                     setState((prevState) => {
                                         console.log(oldData.id);
-                                        editUser(oldData.id);
                                         const data = [...prevState.data];
                                         data[data.indexOf(oldData)] = newData;
                                         return { ...prevState, data };
@@ -78,23 +91,11 @@ function Admin() {
                                 }
                             }, 600);
                         }),
-                    onRowDelete: (oldData) =>
 
-                        new Promise((resolve) => {
-                            setTimeout(() => {
-                                resolve();
-                                setState((prevState) => {
-                                    console.log(oldData.id);
-                                    const data = [...prevState.data];
-                                    data.splice(data.indexOf(oldData), 1);
-                                    return { ...prevState, data };
-                                });
-                            }, 600);
-                        }),
                 }}
             />
         </div>
     );
-}
+};
 
-export default Admin;
+export default AdminTable;

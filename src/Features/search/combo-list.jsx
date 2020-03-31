@@ -4,7 +4,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from "axios";
 import Box from "@material-ui/core/Box";
 
-function ComboList() {
+const ComboList = () => {
     const [userId, setId] = useState(sessionStorage.getItem('userId'));
     const [users, setUsers] = useState([]);
 
@@ -31,6 +31,6 @@ function ComboList() {
             />
         </Box>
     );
-}
+};
 
 export default ComboList;

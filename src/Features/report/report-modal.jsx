@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function ReportForm(props) {
+const ReportModal = props => {
     const classes = useStyles();
     let id = 4;
     sessionStorage.setItem('userId2', id);
@@ -57,7 +57,6 @@ function ReportForm(props) {
         })
         .catch(e => console.log(e));
     }
-
 
     const handleOpen = () => {
         setOpen(true);
@@ -126,6 +125,6 @@ function ReportForm(props) {
             </Modal>
         </div>
     );
-}
+};
 
-export default ReportForm;
+export default ReportModal;
