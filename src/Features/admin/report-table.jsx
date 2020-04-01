@@ -7,9 +7,6 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import Button from "@material-ui/core/Button";
-import axios from "axios";
-import CommentModal from "./comment-modal";
-import Container from "@material-ui/core/Container";
 import Modal from "@material-ui/core/Modal";
 import Fade from "@material-ui/core/Fade";
 import Typography from "@material-ui/core/Typography";
@@ -29,32 +26,30 @@ const useStyles = makeStyles((theme) => ({
         width: 400,
         height: 500,
     },
-    textfield: {
-        width: 330,
-        height: 30,
-        marginBottom: 20,
-        marginTop: 23,
-    },
-    textarea: {
-        width: 330,
-        height: 250,
+    modaltitle: {
         marginBottom: 30,
+    },
+    modaltext: {
+        width: 200,
+        height: 350,
     },
 }));
 
 const ReportTable = ({reports}) => {
     const classes = useStyles();
+    const [title, setTitle] = React.useState(false);
     const [text, setText] = React.useState(false);
     const [open, setOpen] = React.useState(false);
 
-    const handleOpen = () => {
+    const handleOpen = (subject, comment) => {
         setOpen(true);
+        setTitle(subject);
+        setText(comment);
     };
 
     const handleClose = () => {
         setOpen(false);
     };
-
 
     return (
         <TableContainer component={Paper}>
@@ -62,13 +57,12 @@ const ReportTable = ({reports}) => {
                 <TableHead>
                     <TableRow>
                         <TableCell>Id</TableCell>
-                        <TableCell>Fra</TableCell>
-                        <TableCell>Om</TableCell>
+                        <TableCell>Fra bruker</TableCell>
+                        <TableCell>Om bruker</TableCell>
                         <TableCell>Emne</TableCell>
                         <TableCell>Tidspunkt</TableCell>
                     </TableRow>
                 </TableHead>
-
                 <TableBody>
                     {
                         reports.map((report) =>
@@ -86,12 +80,12 @@ const ReportTable = ({reports}) => {
                                         size="small"
                                         color="primary"
                                         variant="contained"
-                                        onClick={handleOpen}
+                                        onClick={() => handleOpen(report.subject, report.comment)}
                                         >
                                         Se
                                     </Button>
-                                    <Modal
 
+                                    <Modal
                                         aria-labelledby="transition-modal-title"
                                         aria-describedby="transition-modal-description"
                                         className={classes.modal}
@@ -99,19 +93,35 @@ const ReportTable = ({reports}) => {
                                         onClose={handleClose}
                                         closeAfterTransition
                                     >
+                                        <Fade in={open}>
+                                            <div className={classes.paper}>
+                                                <div>
+                                                <form>
 
-                                        <div className={classes.paper}>
+                                                <Typography className={classes.modaltitle}  variant="h6">
+                                                    {title}
+                                                </Typography>
+                                                <Typography className={classes.modaltext} noWrap="true" variant='body1'>
+                                                    {text}
+                                                </Typography>
 
-                                        </div>
-
+                                                    <Button
+                                                        size="small"
+                                                        color="primary"
+                                                        variant="contained"
+                                                        onClick={() => handleClose()}
+                                                    >
+                                                        Lukk
+                                                    </Button>
+                                                </form>
+                                                </div>
+                                            </div>
+                                        </Fade>
                                     </Modal>
-
                                 </TableCell>
-
                             </TableRow>)
                         )
                     }
-
                 </TableBody>
             </Table>
         </TableContainer>

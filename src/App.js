@@ -9,7 +9,7 @@ import ColoredLine from "./Components/colored-line";
 import Container from "@material-ui/core/Container";
 import ReportModal from "./Features/report/report-modal";
 import Admin from "./Features/admin/admin-table";
-import ReportList from "./Features/report/report-list";
+import ReportList from "./Features/admin/report-list";
 
 function App() {
     return (
@@ -31,6 +31,8 @@ function App() {
             <Container>
                 <ColoredLine color="grey" />
                 <Admin/>
+            </Container >
+            <Container maxWidth="md">
                 <ColoredLine color="grey" />
                 <ReportList/>
                 <ColoredLine color="grey" />
