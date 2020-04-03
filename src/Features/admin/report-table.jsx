@@ -101,7 +101,7 @@ const ReportTable = ({reports}) => {
                                                 <Typography className={classes.modaltitle}  variant="h6">
                                                     {title}
                                                 </Typography>
-                                                <Typography className={classes.modaltext} noWrap="true" variant='body1'>
+                                                <Typography className={classes.modaltext}  variant='body1'>
                                                     {text}
                                                 </Typography>
 

@@ -10,11 +10,13 @@ import Container from "@material-ui/core/Container";
 import ReportModal from "./Features/report/report-modal";
 import Admin from "./Features/admin/admin-table";
 import ReportList from "./Features/admin/report-list";
+import AmountTable from "./Features/admin/amount-table";
 
 function App() {
     return (
         <div className="App">
             <Container maxWidth="sm">
+                <AmountTable/>
                 <Login/>
                 <ColoredLine color="grey" />
                 <FriendList/>

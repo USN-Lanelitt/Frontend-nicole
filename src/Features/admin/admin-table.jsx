@@ -23,7 +23,7 @@ const AdminTable = () => {
     const [state, setState] = React.useState({
         columns: [
             { title: 'Id', field: 'id' },
-            { title: 'Nickname', field: 'nickname' },
+            { title: 'Visningsnavn', field: 'nickname' },
             { title: 'Fornavn', field: 'firstName' },
             { title: 'Mellomnavn', field: 'middleName' },
             { title: 'Etternavn', field: 'lastName' },

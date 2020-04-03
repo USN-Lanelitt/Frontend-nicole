@@ -25,6 +25,9 @@ const ReportList = () => {
         .catch((e) => {
             console.log(e);
         });
+
+        console.log('antall rapporter');
+        console.log(reports.length);
     }
 
     return (
