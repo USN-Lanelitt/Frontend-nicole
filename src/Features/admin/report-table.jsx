@@ -7,49 +7,26 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import Button from "@material-ui/core/Button";
-import Modal from "@material-ui/core/Modal";
-import Fade from "@material-ui/core/Fade";
-import Typography from "@material-ui/core/Typography";
-import {makeStyles} from "@material-ui/core/styles";
+import ConfirmDialog from "../user/confirm-dialog";
 
-const useStyles = makeStyles((theme) => ({
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    paper: {
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-        width: 400,
-        height: 500,
-    },
-    modaltitle: {
-        marginBottom: 30,
-    },
-    modaltext: {
-        width: 200,
-        height: 350,
-    },
-}));
 
 const ReportTable = ({reports}) => {
-    const classes = useStyles();
     const [title, setTitle] = React.useState(false);
     const [text, setText] = React.useState(false);
-    const [open, setOpen] = React.useState(false);
+    const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+    console.log('reportModal');
 
-    const handleOpen = (subject, comment) => {
-        setOpen(true);
+    const onShow = (subject, comment) => {
+        setShowConfirmDialog(true);
         setTitle(subject);
         setText(comment);
+        console.log('reportshow');
     };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    function onClose() {
+        setShowConfirmDialog(false);
+        console.log('reportclose');
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -80,44 +57,19 @@ const ReportTable = ({reports}) => {
                                         size="small"
                                         color="primary"
                                         variant="contained"
-                                        onClick={() => handleOpen(report.subject, report.comment)}
+                                        onClick={() => onShow(report.subject, report.comment)}
                                         >
                                         Se
                                     </Button>
 
-                                    <Modal
-                                        aria-labelledby="transition-modal-title"
-                                        aria-describedby="transition-modal-description"
-                                        className={classes.modal}
-                                        open={open}
-                                        onClose={handleClose}
-                                        closeAfterTransition
-                                    >
-                                        <Fade in={open}>
-                                            <div className={classes.paper}>
-                                                <div>
-                                                <form>
+                                    <ConfirmDialog
+                                        title={title}
+                                        message={text}
+                                        onConfirm={onClose}
+                                        confirmButtonText="Lukk"
+                                        open={showConfirmDialog}
+                                    />
 
-                                                <Typography className={classes.modaltitle}  variant="h6">
-                                                    {title}
-                                                </Typography>
-                                                <Typography className={classes.modaltext}  variant='body1'>
-                                                    {text}
-                                                </Typography>
-
-                                                    <Button
-                                                        size="small"
-                                                        color="primary"
-                                                        variant="contained"
-                                                        onClick={() => handleClose()}
-                                                    >
-                                                        Lukk
-                                                    </Button>
-                                                </form>
-                                                </div>
-                                            </div>
-                                        </Fade>
-                                    </Modal>
                                 </TableCell>
                             </TableRow>)
                         )
