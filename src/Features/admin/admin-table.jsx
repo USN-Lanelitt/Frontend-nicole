@@ -4,6 +4,7 @@ import axios from "axios";
 import editUser from "./edit-user";
 
 const AdminTable = () => {
+    let list = [];
     const [userId, setUserId] = useState(sessionStorage.getItem('userId'));
     const [users, setUsers] = useState([]);
         useEffect(()=> {
@@ -28,7 +29,6 @@ const AdminTable = () => {
             { title: 'Mellomnavn', field: 'middleName' },
             { title: 'Etternavn', field: 'lastName' },
             { title: 'E-post', field: 'email' },
-            { title: 'Antall', field: 'number' },
             { title: 'Brukertype', field: 'usertype' },
             { title: 'Aktiv', field: 'active'},
             { title: 'Nyheter', field: 'newsSubscription'},

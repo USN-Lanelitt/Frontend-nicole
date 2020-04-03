@@ -3,13 +3,11 @@ import axios from "axios";
 
 const ReportAmount  = () => {
     const [userId, setId] = useState(sessionStorage.getItem('userId'));
-    const [reports, setReports] = useState();
     const [reportNr, setReportNr] = useState();
-    axios.get('/getReports')
+    axios.get('/report/amount')
         .then((response) => {
             if (response.status === 200) {
-                setReports(response.data);
-                setReportNr(reports.length);
+                setReportNr(response.data);
             }
         })
         .catch((e) => {
@@ -17,7 +15,7 @@ const ReportAmount  = () => {
         }, [setReportNr], [userId]);
 
     console.log('antall rapporter');
-    console.log(reports);
+    console.log(reportNr);
 
     return (
         <div>

@@ -1,29 +1,26 @@
 import React, {useState} from "react";
 import axios from "axios";
-import ReportAmount from "./raport-amount";
 
-const UserAmount  = () => {
+const AssetAmount  = () => {
     const [userId, setId] = useState(sessionStorage.getItem('userId'));
-    const [userNr, setUserNr] = useState();
-    axios.get('/users/amount')
+    const [assetNr, setAssetNr] = useState();
+    axios.get('/assets/ AssetAmount/'+userId)
         .then((response) => {
             if (response.status === 200) {
-                setUserNr(response.data);
+                setAssetNr(response.data);
             }
         })
         .catch((e) => {
             console.log(e);
-        }, [setUserNr], [userId]);
+        }, [setAssetNr], [userId]);
 
-    console.log('antall brukere');
-    console.log(userNr);
-
+    console.log('antall asset');
+    console.log(assetNr);
     return (
         <div>
-            {userNr}
+            {assetNr}
         </div>
     );
 };
 
-export default UserAmount;
-
+export default AssetAmount;

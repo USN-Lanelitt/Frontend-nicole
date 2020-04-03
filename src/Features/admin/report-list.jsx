@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import Button from "@material-ui/core/Button";
-import FriendTable from "../friend/friend-table";
 import {CircularProgress} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import axios from "axios";
