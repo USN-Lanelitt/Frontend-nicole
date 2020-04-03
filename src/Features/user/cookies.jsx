@@ -14,7 +14,7 @@ const Cookie = () => {
             <ConfirmDialog
                     title="Informasjonskapsel"
                     message="LåneLitt bruker informasjonskapsler (cookies) på sine nettsider til bl.a.
-                    stastikk og skjemaoppdateriger. Hvis du godtar dette, kan du fortesse å bruke våre nettsider som vanlig."
+                    stastikk og skjemaoppdateriger. Hvis du godtar dette, kan du fortsette å bruke våre nettsider som vanlig."
                     onConfirm={onConform}
                     confirmButtonText="OK"
                     open={showConfirmDialog}
