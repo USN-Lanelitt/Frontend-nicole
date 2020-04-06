@@ -12,6 +12,7 @@ import Admin from "./Features/admin/admin-table";
 import ReportList from "./Features/admin/report-list";
 import AmountTable from "./Features/admin/amount-table";
 import Cookie from "./Features/user/cookies";
+import Chat from "./Component/chat";
 
 
 function App() {
@@ -30,7 +31,8 @@ function App() {
                 <ComboList/>
                 <ColoredLine color="grey" />
                 <ReportModal/>
-
+                <ColoredLine color="grey" />
+                <Chat/>
             </Container>
             <Container>
                 <ColoredLine color="grey" />
@@ -42,6 +44,7 @@ function App() {
                 <ReportList/>
                 <ColoredLine color="grey" />
             </Container>
+
         </div>
 
     );
